@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+        <a class="navbar-brand" href="/">DeFi Farmer Platform</a>
+        <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+    </div>
+</nav>
+
+<div class="container py-4">
+    <h2 class="mb-3">Welcome {{ name }}</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% for msg in messages %}
+        <div class="alert alert-success">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">Available Product Batches</h4>
+
+            {% if products %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-success">
+                        <tr>
+                            <th>ID</th>
+                            <th>Blockchain ID</th>
+                            <th>Crop Name</th>
+                            <th>Quantity</th>
+                            <th>Location</th>
+                            <th>Harvest Date</th>
+                            <th>Price</th>
+                            <th>Farmer</th>
+                            <th>Status</th>
+                            <th>Blockchain Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.blockchain_product_id }}</td>
+                            <td>{{ product.crop_name }}</td>
+                            <td>{{ product.quantity }}</td>
+                            <td>{{ product.location }}</td>
+                            <td>{{ product.harvest_date }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.farmer_name }}</td>
+                            <td>{{ product.status }}</td>
+                            <td>{{ product.blockchain_status }}</td>
+                            <td>
+                                <form method="POST" action="/buyer/buy/{{ product.id }}" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-success">Buy</button>
+                                </form>
+                                <a href="/product/{{ product.id }}" class="btn btn-sm btn-outline-success mt-1">View Trace</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p class="text-muted">No available products right now.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="mb-3">Your Purchased Products</h4>
+
+            {% if purchased_products %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Purchase ID</th>
+                            <th>Product ID</th>
+                            <th>Blockchain ID</th>
+                            <th>Crop Name</th>
+                            <th>Quantity</th>
+                            <th>Location</th>
+                            <th>Harvest Date</th>
+                            <th>Price</th>
+                            <th>Farmer</th>
+                            <th>Status</th>
+                            <th>Blockchain Status</th>
+                            <th>Purchase Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in purchased_products %}
+                        <tr>
+                            <td>{{ item.purchase_id }}</td>
+                            <td>{{ item.product_id }}</td>
+                            <td>{{ item.blockchain_product_id }}</td>
+                            <td>{{ item.crop_name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.location }}</td>
+                            <td>{{ item.harvest_date }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>{{ item.farmer_name }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.blockchain_status }}</td>
+                            <td>{{ item.purchase_date }}</td>
+                            <td>
+                                <a href="/product/{{ item.product_id }}" class="btn btn-sm btn-outline-success">View Trace</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p class="text-muted">You have not purchased anything yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
