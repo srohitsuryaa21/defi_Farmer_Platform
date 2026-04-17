@@ -122,10 +122,8 @@ Windows PowerShell
 
 If blocked:
 
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\venv\Scripts\Activate.ps1
-4. Install dependencies
-pip install -r requirements.txt
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\venv\Scripts\Activate.ps1
+4. Install dependencies pip install -r requirements.txt
 5. Start Ganache
 Open Ganache
 Start a Quickstart Ethereum workspace
