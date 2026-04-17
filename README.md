@@ -112,8 +112,7 @@ updating product status
 reading product data
 checking total blockchain product count
 Setup Instructions
-1. Clone the repository
-git clone <your-repo-link>
+1. Clone the repository git clone <your-repo-link>
 cd defi-farmer-project
 2. Create virtual environment
 python -m venv venv
